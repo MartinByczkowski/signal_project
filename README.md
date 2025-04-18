@@ -68,3 +68,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Student ID: 6355889
 - Student ID: 6404857
 
+Git branches:
+
+Martin:
+git branch i6355889
+
+Tijmen:
+git branch i6404857
