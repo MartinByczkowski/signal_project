@@ -35,7 +35,10 @@ public class AlertGenerator {
      * @param patient the patient data to evaluate for alert conditions
      */
     public void evaluateData(Patient patient) {
-        // Implementation goes here
+        // Example: Trigger an alert if the patient has no records
+        if (patient.getRecords(0, Long.MAX_VALUE).isEmpty()) {
+            triggerAlert(new Alert(String.valueOf(patient.getPatientId()), "No Data", System.currentTimeMillis()));
+        }
     }
 
     /**
@@ -47,6 +50,7 @@ public class AlertGenerator {
      * @param alert the alert object containing details about the alert condition
      */
     private void triggerAlert(Alert alert) {
-        // Implementation might involve logging the alert or notifying staff
+        System.out.println("ALERT: Patient ID: " + alert.getPatientId() + ", Condition: " + alert.getCondition()
+                + ", Timestamp: " + alert.getTimestamp());
     }
 }
