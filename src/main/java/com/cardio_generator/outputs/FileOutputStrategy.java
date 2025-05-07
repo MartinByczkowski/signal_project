@@ -10,16 +10,26 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Implements an output strategy that writes patient data to files.
  * Each label corresponds to a separate file in the specified base directory.
+ * This strategy creates files on demand and appends new data to existing files.
  */
 public class FileOutputStrategy implements OutputStrategy {
 
+    /**
+     * The base directory where all output files will be stored.
+     */
     private final String baseDirectory;
+
+    /**
+     * A thread-safe map that caches file paths for each label to avoid
+     * recalculating paths for repeated labels.
+     */
     private final ConcurrentHashMap<String, String> fileMap = new ConcurrentHashMap<>();
 
     /**
      * Constructs a FileOutputStrategy with the specified base directory.
+     * The directory will be created if it does not exist when data is first output.
      *
-     * @param baseDirectory the directory where output files will be created
+     * @param baseDirectory The directory where output files will be created and stored
      */
     public FileOutputStrategy(String baseDirectory) {
         this.baseDirectory = baseDirectory;
@@ -28,11 +38,14 @@ public class FileOutputStrategy implements OutputStrategy {
     /**
      * Outputs patient data to a file corresponding to the given label.
      * If the file does not exist, it is created. Data is appended to the file.
+     * Each piece of data is written on a new line in a formatted way.
      *
-     * @param patientId the ID of the patient
-     * @param timestamp the timestamp of the data
-     * @param label     the label identifying the type of data
-     * @param data      the data to be written
+     * @param patientId The unique identifier of the patient
+     * @param timestamp The time when the data was recorded (in milliseconds since epoch)
+     * @param label     A descriptive label for the data (e.g., "ECG", "Blood Pressure")
+     * @param data      The actual health data as a string
+     * @throws RuntimeException If an error occurs during file operations, it is caught and logged,
+     *                          but not propagated
      */
     @Override
     public void output(int patientId, long timestamp, String label, String data) {
