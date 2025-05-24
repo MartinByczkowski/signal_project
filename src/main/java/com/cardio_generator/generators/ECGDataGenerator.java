@@ -4,11 +4,22 @@ import java.util.Random;
 
 import com.cardio_generator.outputs.OutputStrategy;
 
+/**
+ * Generator for simulated Electrocardiogram (ECG) data.
+ * This class creates realistic ECG waveforms for patients by simulating
+ * the P wave, QRS complex, and T wave components of a cardiac cycle.
+ */
 public class ECGDataGenerator implements PatientDataGenerator {
     private static final Random random = new Random();
     private double[] lastEcgValues;
     private static final double PI = Math.PI;
 
+    /**
+     * Constructs a new ECGDataGenerator for the specified number of patients.
+     * Initializes the last ECG value for each patient to zero.
+     *
+     * @param patientCount the number of patients for whom ECG data will be generated
+     */
     public ECGDataGenerator(int patientCount) {
         lastEcgValues = new double[patientCount + 1];
         // Initialize the last ECG value for each patient
@@ -17,6 +28,14 @@ public class ECGDataGenerator implements PatientDataGenerator {
         }
     }
 
+    /**
+     * Generates ECG data for a specific patient and sends it to the specified output.
+     * The method simulates an ECG waveform based on the patient's last ECG value,
+     * and handles any exceptions that might occur during generation.
+     *
+     * @param patientId       the unique identifier of the patient for whom data is being generated
+     * @param outputStrategy  the strategy used to output the generated data
+     */
     @Override
     public void generate(int patientId, OutputStrategy outputStrategy) {
         // TODO Check how realistic this data is and make it more realistic if necessary
@@ -30,6 +49,15 @@ public class ECGDataGenerator implements PatientDataGenerator {
         }
     }
 
+    /**
+     * Simulates an ECG waveform for a patient based on their last ECG value.
+     * The method creates a realistic ECG signal by combining sinusoidal waves
+     * that represent the P wave, QRS complex, and T wave of a cardiac cycle.
+     *
+     * @param patientId     the unique identifier of the patient
+     * @param lastEcgValue  the last ECG value generated for this patient
+     * @return              the new ECG value
+     */
     private double simulateEcgWaveform(int patientId, double lastEcgValue) {
         // Simplified ECG waveform generation based on sinusoids
         double hr = 60.0 + random.nextDouble() * 20.0; // Simulate heart rate variability between 60 and 80 bpm
