@@ -1,7 +1,9 @@
 package com.alerts;
 
+import com.alerts.Decorator_pattern.AlertComponent;
+
 // Represents an alert
-public class Alert {
+public class Alert implements AlertComponent {
     private String patientId;
     private String condition;
     private long timestamp;
@@ -22,5 +24,10 @@ public class Alert {
 
     public long getTimestamp() {
         return timestamp;
+    }
+
+    @Override
+    public String getDetails() {
+        return "Alert: " + condition;
     }
 }

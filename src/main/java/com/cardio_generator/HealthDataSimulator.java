@@ -37,6 +37,8 @@ public class HealthDataSimulator {
     private static OutputStrategy outputStrategy = new ConsoleOutputStrategy(); // Default output strategy
     private static final Random random = new Random();
 
+    private static HealthDataSimulator instance;
+
     /**
      * The main entry point for the HealthDataSimulator application.
      * Parses command-line arguments, initializes the scheduler, and starts generating data.
@@ -193,5 +195,16 @@ public class HealthDataSimulator {
      */
     private static void scheduleTask(Runnable task, long period, TimeUnit timeUnit) {
         scheduler.scheduleAtFixedRate(task, random.nextInt(5), period, timeUnit);
+    }
+
+    private HealthDataSimulator() {
+        // private constructor to prevent instantiation
+    }
+
+    public static synchronized HealthDataSimulator getInstance() {
+        if (instance == null) {
+            instance = new HealthDataSimulator();
+        }
+        return instance;
     }
 }

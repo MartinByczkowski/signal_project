@@ -21,7 +21,7 @@ class DataStorageTest {
         };
 
         // Initialize DataStorage with the mock reader
-        DataStorage storage = new DataStorage();
+        DataStorage storage = DataStorage.getInstance();
         try {
             reader.readData(storage);
         } catch (Exception e) {
