@@ -33,7 +33,7 @@ class FileDataReaderTest {
             writer.write("2,97.0,BloodSaturation,1700000003000\n");
         }
         
-        dataStorage = new DataStorage();
+        dataStorage = DataStorage.getInstance();
     }
 
     @AfterEach
